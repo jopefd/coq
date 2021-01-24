@@ -868,23 +868,17 @@ Proof. simpl. reflexivity.  Qed.
     function, but you can use two if you want.) *)
 
 Definition ltb (n m : nat) : bool :=
-  match n with
-  | 0 =>
-    match m with
-    | 0 => false
-    | S m' => negb (eqb m' n)
-    end
-  | S n' => negb (eqb n' n)
-  end.
+  (n <=? m) && negb (n =? m).
+
 
 Notation "x <? y" := (ltb x y) (at level 70) : nat_scope.
 
-(** Example test_ltb1:             (ltb 2 2) = false.
-Proof. simpl. reflexivity. Qed.
+Example test_ltb1:             (ltb 2 2) = false.
+Proof.  unfold ltb. simpl. reflexivity. Qed.
 Example test_ltb2:             (ltb 2 4) = true.
-Proof. simpl. reflexivity. Qed.
+Proof.  unfold ltb. simpl. reflexivity. Qed.
 Example test_ltb3:             (ltb 4 2) = false.
-Proof. simpl. reflexivity. Qed. *)
+Proof.  unfold ltb. simpl. reflexivity. Qed.
 (** [] *)
 
 (* ################################################################# *)
@@ -1046,7 +1040,7 @@ Proof.
   rewrite -> H.
   intros H'.
   rewrite -> H'.
-  reflexivity.
+  reflexivity.  
 Qed.
 (** [] *)
 
