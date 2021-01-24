@@ -1089,7 +1089,12 @@ Proof.
 Theorem mult_n_1 : forall p : nat,
   p * 1 = p.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros p.
+  rewrite <- mult_n_Sm.
+  rewrite <- mult_n_O.
+  simpl.
+  reflexivity.
+Qed.
 
 (** [] *)
 
