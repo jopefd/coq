@@ -14,12 +14,15 @@ Qed.
 
 (** Pierce fraca *)
 
-Theorem pierce_fraca :
+Theorem peirce_fraca :
 forall (p q : Prop), ((p -> q) -> p) -> ~~p.
 Proof.
   intros p q.
   intro Hpimpqimpp.
   unfold not.
   intro Hnp.
-  apply (Hnp Hpimpqimpp).
+  apply Hnp.
+  apply Hpimpqimpp.
+  intro Hp.
+  contradiction.
 Qed.
