@@ -19,5 +19,5 @@ Proof.
   intro Hpimpqimpp.
   unfold not.
   intro Hnp.
-  apply (Hpimpqimpp Hnp).
+  apply (Hnp Hpimpqimpp).
 Qed.
