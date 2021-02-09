@@ -6,8 +6,10 @@ forall (p : Prop), (p \/ ~p).
 Theorem pierce_with_lem :
 lem -> forall (p q : Prop), ((p -> q) -> p) -> p.
 Proof.
-  intros Hlem p q Hpimpqimpp.
-  apply (Hpimpqimpp (Hlem p q)).
+  intro Hlem.
+  intros p q.
+  destruct (Hlem p) as [Hp | Hnp].
+  - intro Hpimpqimpp. apply (Hpimpqimpp Hp).
 Qed.
 
 (** Pierce fraca *)
