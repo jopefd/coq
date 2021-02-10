@@ -3,14 +3,21 @@
 Definition lem : Prop :=
 forall (p : Prop), (p \/ ~p).
 
-Theorem pierce_with_lem :
+Theorem peirce_with_lem :
 lem -> forall (p q : Prop), ((p -> q) -> p) -> p.
 Proof.
   intro Hlem.
   intros p q.
+  intro Hpimpqimpp.
   destruct (Hlem p) as [Hp | Hnp].
-  - intro Hpimpqimpp. apply (Hpimpqimpp Hp).
+  { assumption. }
+  { unfold not in Hnp.
+    assert (Hpimpq: p -> q).
+    { intro Hp.
+      contradiction. }
+    { apply (Hpimpqimpp Hpimpq). } }
 Qed.
+
 
 (** Pierce fraca *)
 
