@@ -2,11 +2,14 @@ Definition lem : Prop :=
 forall (p : Prop), (p \/ ~p).
 
 Theorem implies_interdef_1 :
-forall (p q : Prop), (p -> q) -> (~p \/ q).
+lem -> forall (p q : Prop), (p -> q) -> (~p \/ q).
 Proof.
-  intros p q.
-  assert (Hpimpq: p -> q).
-  { intro Hp.  contradi
+  intros Hlem p q.
   intro Hpimpq.
-  assert 
+  destruct (Hlem p) as [Hp | Hnp].
+  - apply Hpimpq in Hp as Hq.
+    right.
+    assumption.
+  - left.
+    assumption.
 Qed.
