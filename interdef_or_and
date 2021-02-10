@@ -1,1 +1,16 @@
+Theorem interdef1_or_and :  
+forall (p q : Prop), (p \/ q) -> ~(~p /\ ~q).
+Proof.
+  intros p q.
+  intro Hporq.
+  unfold not.
+  intro Hnpandnq.
+  destruct Hnpandnq as [Hnp Hnq].
+  destruct Hporq as [Hp | Hq].
+  - apply Hnp in Hp.
+    assumption.
+  - apply Hnq in Hq.
+    assumption.
+Qed.
+
 
