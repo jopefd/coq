@@ -1,7 +1,7 @@
 Definition lem : Prop :=
 forall (p : Prop), (p \/ ~p).
 
-Theorem implies_interdef_1 :
+Theorem interdef1_implies_or :
 forall (p q : Prop), (p -> q) -> (~p \/ q).
 lem -> forall (p q : Prop), (p -> q) -> (~p \/ q).
 Proof.
@@ -19,7 +19,7 @@ Proof.
     assumption.
 Qed.
 
-Theorem implies_interdef_2 :
+Theorem interdef2_implies_or :
 forall (p q : Prop), (~p \/ q) -> (p -> q).
 Proof.
   intros p q.
@@ -31,7 +31,7 @@ Proof.
   - assumption.
 Qed.
 
-Theorem implies_interdef_3 :
+Theorem interdef3_implies_or :
 forall (p q : Prop), (p \/ q) -> (~p -> q).
 Proof.
   intros p q.
@@ -43,7 +43,7 @@ Proof.
     assumption.
 Qed.
 
-Theorem implies_interdef_4 :
+Theorem interdef4_implies_or :
 lem -> forall (p q : Prop), (~p -> q) -> (p \/ q).
 Proof.
   intro Hlem.
