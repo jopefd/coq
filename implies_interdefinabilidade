@@ -30,3 +30,15 @@ Proof.
     contradiction.
   - assumption.
 Qed.
+
+Theorem implies_interdef_3 :
+forall (p q : Prop), (p \/ q) -> (~p -> q).
+Proof.
+  intros p q.
+  intro Hporq.
+  destruct Hporq as [Hp | Hq].
+  - intro Hnp.
+    contradiction.
+  - intro Hnp.
+    assumption.
+Qed.
