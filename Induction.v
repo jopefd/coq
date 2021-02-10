@@ -225,10 +225,34 @@ Proof.
     reflexivity.  }
 Qed.
 
-Theorem plus_comm : forall n m : nat,
+(** Theorem plus_comm : forall n m : nat,
   n + m = m + n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m.
+  induction n as [ | n'].
+  { induction m as [ | m'].
+    { reflexivity.  }
+    { simpl.
+      rewrite <- IHm'.
+      simpl.
+      reflexivity.  } }
+  { induction m as [ | m'].
+    { simpl.
+      rewrite -> IHn'.
+      simpl.
+      reflexivity.  }
+    { simpl.
+      rewrite <- IHm'.
+      { rewrite -> IHn'. simpl.
+        { simpl.
+        
+      
+      { simpl.
+        rewrite 
+      simpl.
+    rewrite <- IHn'.
+    reflexivity.
+Qed. *)
 
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
