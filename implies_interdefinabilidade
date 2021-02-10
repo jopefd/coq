@@ -42,3 +42,17 @@ Proof.
   - intro Hnp.
     assumption.
 Qed.
+
+Theorem implies_interdef_4 :
+lem -> forall (p q : Prop), (~p -> q) -> (p \/ q).
+Proof.
+  intro Hlem.
+  intros p q.
+  intro Hnpimpq.
+  destruct (Hlem p) as [Hp | Hnp].
+  - left.
+    assumption.
+  - apply Hnpimpq in Hnp.
+    right.
+    assumption.
+Qed.
