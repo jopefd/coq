@@ -37,3 +37,18 @@ Proof.
       * apply Hnnpornq in Seila.
         contradiction.
 Qed.
+
+Theorem interdef3_or_and :  
+forall (p q : Prop), (p /\ q) -> ~(~p \/ ~q).
+Proof.
+  intros p q.
+  intro Hpandq.
+  unfold not.
+  intro Hnpornq.
+  destruct Hpandq as [Hp Hq].
+  destruct Hnpornq as [Hnp | Hnq].
+  - apply Hnp in Hp.
+    assumption.
+  - apply Hnq in Hq.
+    assumption.
+Qed.
