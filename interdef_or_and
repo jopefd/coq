@@ -1,3 +1,6 @@
+Definition lem : Prop :=
+forall (p : Prop), (p \/ ~p).
+
 Theorem interdef1_or_and :  
 forall (p q : Prop), (p \/ q) -> ~(~p /\ ~q).
 Proof.
@@ -13,4 +16,24 @@ Proof.
     assumption.
 Qed.
 
-
+Theorem interdef2_or_and :  
+lem -> forall (p q : Prop), ~(~p /\ ~q) -> (p \/ q).
+Proof.
+  intros Hlem p q.
+  intro Hnnpornq.
+  unfold not in Hnnpornq.
+  destruct (Hlem p) as [Hp | Hnp].
+  - left.
+    assumption.
+  - unfold not in Hnp.
+    right.
+    destruct (Hlem q) as [Hq | Hnq].
+    + assumption.
+    + unfold not in Hnq.
+      assert (Seila: ~p /\ ~q).
+      * split.
+        -- assumption.
+        -- assumption.
+      * apply Hnnpornq in Seila.
+        contradiction.
+Qed.
