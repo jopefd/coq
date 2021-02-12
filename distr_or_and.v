@@ -52,3 +52,28 @@ Proof.
       right.
       assumption.
 Qed.
+
+Theorem distr4_or_and :
+forall (p q r: Prop), (p \/ q) /\ (p \/ r) -> p \/ (q /\ r).
+Proof.
+  intros p q r.
+  intro Hporqandporr.
+  destruct Hporqandporr as [Hporq Hporr].
+  destruct Hporq as [Hp | Hq].
+  - destruct Hporr as [Hp' | Hr].
+    + left.
+      assumption.
+    + left.
+      assumption.
+  - destruct Hporr as [Hp' | Hr].
+    + left.
+      assumption.
+    + right.
+      assert (Hqandr: q /\ r).
+      * split.
+        -- assumption.
+        -- assumption.
+      * split.
+        -- assumption.
+        -- assumption.
+Qed.
