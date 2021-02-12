@@ -52,3 +52,22 @@ Proof.
   - apply Hnq in Hq.
     assumption.
 Qed.
+
+Theorem interdef4_or_and :  
+lem -> forall (p q : Prop), ~(~p \/ ~q) -> (p /\ q).
+Proof.
+  intros Hlem p q.
+  intro Hnnpornq.
+  unfold not in Hnnpornq.
+  destruct (Hlem p) as [Hp | Hnp].
+  - destruct (Hlem q) as [Hq | Hnq].
+    + split.
+      * assumption.
+      * assumption.
+    + split.
+      * assumption.
+      * assert (HAq: ~q).
+        --  assumption.
+        --  assumption.
+
+Qed.
