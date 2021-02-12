@@ -13,81 +13,59 @@ From LF Require Export Basics.
     in a directory associated with the prefix [LF].  This file is
     analogous to the [.class] files compiled from [.java] source files
     and the [.o] files compiled from [.c] files.
-
     First create a file named [_CoqProject] containing the following
     line (if you obtained the whole volume "Logical Foundations" as a
     single archive, a [_CoqProject] should already exist and you can
     skip this step):
-
       [-Q . LF]
-
     This maps the current directory ("[.]", which contains [Basics.v],
     [Induction.v], etc.) to the prefix (or "logical directory")
     "[LF]".  PG and CoqIDE read [_CoqProject] automatically, so they
     know to where to look for the file [Basics.vo] corresponding to
     the library [LF.Basics].
-
     Once [_CoqProject] is thus created, there are various ways to
     build [Basics.vo]:
-
      - In Proof General: The compilation can be made to happen
        automatically when you submit the [Require] line above to PG,
        by setting the emacs variable [coq-compile-before-require] to
        [t]. You can also use the menu option "Coq -> Auto
        Compilation -> Compile Before Require".
-
      - In CoqIDE: Open [Basics.v]; then, in the "Compile" menu, click
        on "Compile Buffer".
-
      - From the command line: Generate a [Makefile] using the
        [coq_makefile] utility, that comes installed with Coq (if you
        obtained the whole volume as a single archive, a [Makefile]
        should already exist and you can skip this step):
-
          [coq_makefile -f _CoqProject *.v -o Makefile]
-
        Note: You should rerun that command whenever you add or remove
        Coq files to the directory.
-
        Now you can compile [Basics.v] by running [make] with the
        corresponding [.vo] file as a target:
-
          [make Basics.vo]
-
        All files in the directory can be compiled by giving no
        arguments:
-
          [make]
-
        Under the hood, [make] uses the Coq compiler, [coqc].  You can
        also run [coqc] directly:
-
          [coqc -Q . LF Basics.v]
-
        But [make] also calculates dependencies between source files to
        compile them in the right order, so [make] should generally be
        prefered over explicit [coqc].
-
     If you have trouble (e.g., if you get complaints about missing
     identifiers later in the file), it may be because the "load path"
     for Coq is not set up correctly.  The [Print LoadPath.] command
     may be helpful in sorting out such issues.
-
     In particular, if you see a message like
-
         [Compiled library Foo makes inconsistent assumptions over
         library Bar]
-
     check whether you have multiple installations of Coq on your
     machine.  It may be that commands (like [coqc]) that you execute
     in a terminal window are getting a different version of Coq than
     commands executed by Proof General or CoqIDE.
-
     - Another common reason is that the library [Bar] was modified and
       recompiled without also recompiling [Foo] which depends on it.
       Recompile [Foo], or everything if too many files are
       affected.  (Using the third solution above: [make clean; make].)
-
     One more tip for CoqIDE users: If you see messages like [Error:
     Unable to locate library Basics], a likely reason is
     inconsistencies between compiling things _within CoqIDE_ vs _using
@@ -140,7 +118,6 @@ Abort.
 (** To prove interesting facts about numbers, lists, and other
     inductively defined sets, we often need a more powerful reasoning
     principle: _induction_.
-
     Recall (from high school, a discrete math course, etc.) the
     _principle of induction over natural numbers_: If [P(n)] is some
     proposition involving a natural number [n] and we want to show
@@ -149,7 +126,6 @@ Abort.
          - show that, for any [n'], if [P(n')] holds, then so does
            [P(S n')];
          - conclude that [P(n)] holds for all [n].
-
     In Coq, the steps are the same: we begin with the goal of proving
     [P(n)] for all [n] and break it down (by applying the [induction]
     tactic) into two separate subgoals: one where we must show [P(O)]
@@ -169,11 +145,9 @@ Proof.
     the [as...] clause and Coq will choose names for us.  In practice,
     this is a bad idea, as Coq's automatic choices tend to be
     confusing.)
-
     In the first subgoal, [n] is replaced by [0].  No new variables
     are introduced (so the first part of the [as...] is empty), and
     the goal becomes [0 = 0 + 0], which follows by simplification.
-
     In the second subgoal, [n] is replaced by [S n'], and the
     assumption [n' + 0 = n'] is added to the context with the name
     [IHn'] (i.e., the Induction Hypothesis for [n']).  These two names
@@ -197,7 +171,6 @@ Proof.
     into the context as needed.) *)
 
 (** **** Exercise: 2 stars, standard, especially useful (basic_induction) 
-
     Prove the following using induction. You might need previously
     proven results. *)
 
@@ -225,34 +198,19 @@ Proof.
     reflexivity.  }
 Qed.
 
-(** Theorem plus_comm : forall n m : nat,
+Theorem plus_comm : forall n m : nat,
   n + m = m + n.
 Proof.
   intros n m.
   induction n as [ | n'].
-  { induction m as [ | m'].
-    { reflexivity.  }
-    { simpl.
-      rewrite <- IHm'.
-      simpl.
-      reflexivity.  } }
-  { induction m as [ | m'].
-    { simpl.
-      rewrite -> IHn'.
-      simpl.
-      reflexivity.  }
-    { simpl.
-      rewrite <- IHm'.
-      { rewrite -> IHn'. simpl.
-        { simpl.
-        
-      
-      { simpl.
-        rewrite 
-      simpl.
+  - simpl.
+    rewrite <- plus_n_O.
+    reflexivity.
+  - simpl.
+    rewrite <- plus_n_Sm.
     rewrite <- IHn'.
     reflexivity.
-Qed. *)
+Qed.
 
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
@@ -261,7 +219,6 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard (double_plus) 
-
     Consider the following function, which doubles its argument: *)
 
 Fixpoint double (n:nat) :=
@@ -278,7 +235,6 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (evenb_S) 
-
     One inconvenient aspect of our definition of [evenb n] is the
     recursive call on [n - 2]. This makes proofs about [evenb n]
     harder when done by induction on [n], since we may need an
@@ -293,10 +249,8 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 1 star, standard, optional (destruct_induction) 
-
     Briefly explain the difference between the tactics [destruct]
     and [induction].
-
 (* FILL IN HERE *)
 *)
 
@@ -384,14 +338,12 @@ Proof.
     instills in the reader or hearer the certainty that [P] is true --
     an unassailable argument for the truth of [P].  That is, a proof
     is an act of communication.
-
     Acts of communication may involve different sorts of readers.  On
     one hand, the "reader" can be a program like Coq, in which case
     the "belief" that is instilled is that [P] can be mechanically
     derived from a certain set of formal logical rules, and the proof
     is a recipe that guides the program in checking this fact.  Such
     recipes are _formal_ proofs.
-
     Alternatively, the reader can be a human being, in which case the
     proof will be written in English or some other natural language,
     and will thus necessarily be _informal_.  Here, the criteria for
@@ -409,14 +361,12 @@ Proof.
     Ultimately, there is no universal standard, because there is no
     single way of writing an informal proof that is guaranteed to
     convince every conceivable reader.
-
     In practice, however, mathematicians have developed a rich set of
     conventions and idioms for writing about complex mathematical
     objects that -- at least within a certain community -- make
     communication fairly reliable.  The conventions of this stylized
     form of communication give a fairly clear standard for judging
     proofs good or bad.
-
     Because we are using Coq in this course, we will be working
     heavily with formal proofs.  But this doesn't mean we can
     completely forget about informal ones!  Formal proofs are useful
@@ -448,34 +398,21 @@ Proof.
     the state of the context and goal stack at each point, but if the
     proof were even a little bit more complicated this would be next
     to impossible.
-
     A (pedantic) mathematician might write the proof something like
     this: *)
 
 (** - _Theorem_: For any [n], [m] and [p],
-
       n + (m + p) = (n + m) + p.
-
     _Proof_: By induction on [n].
-
     - First, suppose [n = 0].  We must show that
-
         0 + (m + p) = (0 + m) + p.
-
       This follows directly from the definition of [+].
-
     - Next, suppose [n = S n'], where
-
         n' + (m + p) = (n' + m) + p.
-
       We must now show that
-
         (S n') + (m + p) = ((S n') + m) + p.
-
       By the definition of [+], this follows from
-
         S (n' + (m + p)) = S ((n' + m) + p),
-
       which is immediate from the induction hypothesis.  _Qed_. *)
 
 (** The overall form of the proof is basically similar, and of
@@ -490,11 +427,8 @@ Proof.
     things stand). *)
 
 (** **** Exercise: 2 stars, advanced, especially useful (plus_comm_informal) 
-
     Translate your solution for [plus_comm] into an informal proof:
-
     Theorem: Addition is commutative.
-
     Proof: (* FILL IN HERE *)
 *)
 
@@ -503,13 +437,10 @@ Definition manual_grade_for_plus_comm_informal : option (nat*string) := None.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (eqb_refl_informal) 
-
     Write an informal proof of the following theorem, using the
     informal proof of [plus_assoc] as a model.  Don't just
     paraphrase the Coq tactics into English!
-
     Theorem: [true = n =? n] for any [n].
-
     Proof: (* FILL IN HERE *)
 *)
 (** [] *)
@@ -518,7 +449,6 @@ Definition manual_grade_for_plus_comm_informal : option (nat*string) := None.
 (** * More Exercises *)
 
 (** **** Exercise: 3 stars, standard, especially useful (mult_comm) 
-
     Use [assert] to help prove [plus_swap].  You don't need to
     use induction yet. *)
 
@@ -538,7 +468,6 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 3 stars, standard, optional (more_exercises) 
-
     Take a piece of paper.  For each of the following theorems, first
     _think_ about whether (a) it can be proved using only
     simplification and rewriting, (b) it also requires case
@@ -607,13 +536,11 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (plus_swap') 
-
     The [replace] tactic allows you to specify a particular subterm to
    rewrite and what you want it rewritten to: [replace (t) with (u)]
    replaces (all copies of) expression [t] in the goal by expression
    [u], and generates [t = u] as an additional subgoal. This is often
    useful when a plain [rewrite] acts on the wrong part of the goal.
-
    Use the [replace] tactic to do a proof of [plus_swap'], just like
    [plus_swap] but without needing [assert]. *)
 
@@ -624,11 +551,9 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 3 stars, standard, especially useful (binary_commute) 
-
     Recall the [incr] and [bin_to_nat] functions that you
     wrote for the [binary] exercise in the [Basics] chapter.  Prove
     that the following diagram commutes:
-
                             incr
               bin ----------------------> bin
                |                           |
@@ -637,12 +562,10 @@ Proof.
                v                           v
               nat ----------------------> nat
                              S
-
     That is, incrementing a binary number and then converting it to
     a (unary) natural number yields the same result as first converting
     it to a natural number and then incrementing.
     Name your theorem [bin_to_nat_pres_incr] ("pres" for "preserves").
-
     Before you start working on this exercise, copy the definitions of
     [incr] and [bin_to_nat] from your solution to the [binary]
     exercise here so that this file can be graded on its own.  If you
@@ -656,11 +579,9 @@ Definition manual_grade_for_binary_commute : option (nat*string) := None.
 (** [] *)
 
 (** **** Exercise: 5 stars, advanced (binary_inverse) 
-
     This is a further continuation of the previous exercises about
     binary numbers.  You may find you need to go back and change your
     earlier definitions to get things to work here.
-
     (a) First, write a function to convert natural numbers to binary
         numbers. *)
 
