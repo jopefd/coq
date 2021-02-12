@@ -34,6 +34,21 @@ Proof.
     assumption.
 Qed.
 
+Theorem demorgan4 :
+forall (p q : Prop), (~q \/ ~p) -> ~(p /\ q).
+Proof.
+  intros p q.
+  unfold not.
+  intro Hnqandnp.
+  intro Hpandq.
+  destruct Hpandq as [Hp Hq].
+  destruct Hnqandnp as [Hnq | Hnp].
+  - apply Hnq in Hq.
+    assumption.
+  - apply Hnp in Hp.
+    assumption.
+Qed.
+
 Definition lem : Prop :=
 forall (p : Prop), (p \/ ~p).
 
