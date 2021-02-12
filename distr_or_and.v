@@ -32,3 +32,23 @@ Proof.
     + right.
       assumption.
 Qed.
+
+Theorem distr3_or_and :
+forall (p q r: Prop), p \/ (q /\ r) -> (p \/ q) /\ (p \/ r).
+Proof.
+  intros p q r.
+  intro Hpandqorr.
+  destruct Hpandqorr as [Hp | Hqandr].
+  - split.
+    + left.
+      assumption.
+    + left.
+      assumption.
+  - split.
+    + destruct Hqandr as [Hq Hr].
+      right.
+      assumption.
+    + destruct Hqandr as [Hq Hr].
+      right.
+      assumption.
+Qed.
