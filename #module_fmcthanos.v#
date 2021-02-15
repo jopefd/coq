@@ -49,23 +49,18 @@ Notation "x ^ y" := (power x y).
 Compute S(S O) ^ S(S(S O)).
 
 (** Exercício x4.11 *)
+Fixpoint minus (n m : Nat) : Nat =
+  match m with
+  | O => O
+  | S m => 
+
 Fixpoint fib (n : Nat) : Nat :=
   match n with
   | O => O
   | S O => S O
-  | S (S n') => fib (n') + fib n'
+  | S(S n) => fib (S n) + fib (n)
   end.
 
 Compute fib (S(S(S(S O)))).
 
 End fmcthanos.
-
-
-
-
-
-
-
-
-
-
