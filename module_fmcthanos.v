@@ -4,12 +4,12 @@ Inductive Nat : Type :=
   | O
   | S (n : Nat).
 
-Fixpoint Soma (n m : Nat) : Nat :=
+Fixpoint plus (n m : Nat) : Nat :=
   match m with
   | O => n
-  | S m => S (Soma n m)
+  | S m => S (plus n m)
   end.
-Notation "x + y" := (Soma x y).
+Notation "x + y" := (plus x y).
 
 (** Exercício x4.3 *)
 Compute O + S(S(S(S O))).
@@ -19,16 +19,16 @@ Compute S(S(S O)) + S(S O).
 Compute (S(S(S O)) + S(S O)) + S O.
 
 (** Exercício x4.5 *)
-Fixpoint Dobro (n : Nat) : Nat :=
+Fixpoint double (n : Nat) : Nat :=
   n + n.
 
 (** Exercício x4.6 *)
-Fixpoint Multiplicacao (n m : Nat) :=
+Fixpoint mult (n m : Nat) :=
   match m with
   | O => O
-  | S m => (Multiplicacao n m) + n
+  | S m => (mult n m) + n
   end.
-Notation "x * y" := (Multiplicacao x y).
+Notation "x * y" := (mult x y).
 
 (** Exercício x4.7 *)
 Compute S(S O) * (O + S O).
@@ -38,32 +38,29 @@ Compute S(S O) * S(S(S O)).
 Compute S(S(S O)) * S(S O).
 
 (** Exercício x4.9 *)
-Fixpoint Exponenciacao (n m : Nat) :=
+Fixpoint power (n m : Nat) :=
   match m with
   | O => S O
-  | S m => (Exponenciacao n m) * n
+  | S m => (power n m) * n
   end.
-Notation "x ^ y" := (Exponenciacao x y).
+Notation "x ^ y" := (power x y).
 
 (** Exercício x4.10 *)
 Compute S(S O) ^ S(S(S O)).
 
 (** Exercício x4.11 *)
-Fixpoint Fib (n : Nat) : Nat :=
+Fixpoint minus (n m : Nat) : Nat =
+  match m with
+  | O => O
+  | S m => 
+
+Fixpoint fib (n : Nat) : Nat :=
   match n with
   | O => O
   | S O => S O
-  | S (S n) => Fib (S n) + Fib n
+  | S(S n) => fib (S n) + fib (n)
   end.
 
+Compute fib (S(S(S(S O)))).
+
 End fmcthanos.
-
-
-
-
-
-
-
-
-
-
