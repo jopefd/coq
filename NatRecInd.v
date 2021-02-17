@@ -48,7 +48,7 @@ Notation "x ^ y" := (power x y).
 (** Exercício x4.10 *)
 Compute S(S O) ^ S(S(S O)).
 
-(** Exercício x4.11 *)
+(** Exercício x4.11
 Fixpoint minus (n m : Nat) : Nat =
   match m with
   | O => O
@@ -61,6 +61,26 @@ Fixpoint fib (n : Nat) : Nat :=
   | S(S n) => fib (S n) + fib (n)
   end.
 
-Compute fib (S(S(S(S O)))).
+Compute fib (S(S(S(S O)))). *)
+
+(** Exercício x4.13 *)
+Theorem mult_assprop :
+forall (n m k : Nat), (n * m) * k = n * (m * k).
+Proof.
+  intros n m k.
+  induction k as [ | k'].
+  - simpl.
+    reflexivity.
+  - simpl. rewrite -> IHk'.
+
+
+ induction m as [ | m'].
+    + simpl.
+      rewrite <- IHk'.
+      simpl.
+      reflexivity.
+    + simpl.
+      rewrite - IHm'.
+Qed.
 
 End fmcthanos.
