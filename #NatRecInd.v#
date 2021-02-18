@@ -101,6 +101,21 @@ Proof.
     reflexivity.
 Qed.
 
+(** Exercício x4.14 *)
+Theorem mult_assoc :
+forall (n m k : Nat), (n * m) * k = n * (m * k).
+Proof.
+  intros n m k.
+  induction k as [ | k'].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHk'.
+    rewrite <- mult_distr.
+    reflexivity.
+Qed.
+
+
 (** Exercício x4.15 *)
 Theorem mult_comm_prop :
 forall (n m : Nat), n * m = m * n.
@@ -123,25 +138,5 @@ Proof.
       simpl. (**
       rewrite <- IHt. *)
 Abort.
-
-(** Exercício x4.14 *)
-Theorem mult_assoc_prop :
-forall (n m k : Nat), (n * m) * k = n * (m * k).
-Proof.
-  intros n m k.
-  induction k as [ | k'].
-  - simpl.
-    reflexivity.
-  - simpl. rewrite -> IHk'.
-
-
- induction m as [ | m'].
-    + simpl.
-      rewrite <- IHk'.
-      simpl.
-      reflexivity.
-    + simpl.
-      rewrite - IHm'.
-Qed.
 
 End fmcthanos.
