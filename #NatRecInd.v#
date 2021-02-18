@@ -88,23 +88,18 @@ Proof.
     reflexivity.
 Qed.
 
-Theorem mult_distr_prop :
+Theorem mult_distr :
 forall (x y z : Nat), x * (y + z) = (x * y) + (x * z).
 Proof.
   intros x y z.
   induction z as [ | z'].
   - simpl.
     reflexivity.
-  - 
-
-
-simpl.
+  - simpl.
     rewrite -> IHz'.
-    assert (Heq: x * y + x * (z' + x) = x * y + (x * (z' + S O))).
-    + simpl. (**
-      reflexivity.
-    + rewrite -> Heq. *)
-Abort.
+    rewrite <- plus_assoc.
+    reflexivity.
+Qed.
 
 (** Exercício x4.15 *)
 Theorem mult_comm_prop :
