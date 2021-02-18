@@ -76,18 +76,6 @@ Proof.
 Qed.
 
 (** Exercício x4.16 *)
-Lemma mult_SO :
-forall (a : Nat), a * S O = a.
-Proof.
-  intro a.
-  simpl.
-  induction a as [ | b].
-  - reflexivity.
-  - simpl.
-    rewrite -> IHb.
-    reflexivity.
-Qed.
-
 Theorem mult_distr :
 forall (x y z : Nat), x * (y + z) = (x * y) + (x * z).
 Proof.
@@ -115,9 +103,26 @@ Proof.
     reflexivity.
 Qed.
 
-
 (** Exercício x4.15 *)
-Theorem mult_comm_prop :
+Lemma mult_SO :
+forall (a : Nat), (a * S O = a) /\ (S O * a = a).
+Proof.
+  intro a.
+  split.
+  - simpl.
+    induction a as [ | x].
+    + reflexivity.
+    + simpl.
+      rewrite -> IHx.
+      reflexivity.
+  - induction a as [ | x].
+    + simpl.
+      reflexivity.
+    + simpl.
+      rewrite -> IHx.
+      reflexivity.
+Qed.
+Theorem mult_comm :
 forall (n m : Nat), n * m = m * n.
 Proof.
   intros n m.
@@ -128,9 +133,10 @@ Proof.
       rewrite <- IHu.
       simpl.
       reflexivity.
-  - simpl. induction n as [ | v]. 
-    + simpl.
-      rewrite -> IHt.
+  - simpl.
+    rewrite -> IHt.
+    induction t as [ | v]. 
+    + rewrite <- IHt.
       simpl.
       reflexivity.
     + simpl.
