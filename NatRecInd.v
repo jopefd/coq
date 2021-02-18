@@ -63,8 +63,43 @@ Fixpoint fib (n : Nat) : Nat :=
 
 Compute fib (S(S(S(S O)))). *)
 
-(** Exercício x4.13 *)
-Theorem mult_assprop :
+(** Exercício x4.16 *)
+Theorem mult_distr_prop :
+forall (x y z : Nat), x * (y + z) = (x * y) + (x * z).
+Proof.
+  intros x y z.
+  induction z as [ | z'].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHz'.
+Abort.
+
+(** Exercício x4.15 *)
+Theorem mult_comm_prop :
+forall (n m : Nat), n * m = m * n.
+Proof.
+  intros n m.
+  induction m as [ | t].
+  - induction n as [ | u].
+    + reflexivity.
+    + simpl.
+      rewrite <- IHu.
+      simpl.
+      reflexivity.
+  - induction n as [ | v].
+    + simpl.
+      rewrite -> IHt.
+      simpl.
+      reflexivity.
+    + simpl.
+      rewrite -> IHt.
+      simpl.
+      rewrite <- IHt.
+Abort.
+
+(** Exercício x4.14 *)
+Theorem mult_assoc_prop :
 forall (n m k : Nat), (n * m) * k = n * (m * k).
 Proof.
   intros n m k.
