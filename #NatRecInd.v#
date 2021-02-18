@@ -144,6 +144,21 @@ Proof.
     rewrite -> IHx.
     reflexivity.
 Qed.
+Lemma Sn_m :
+forall (n t : Nat), S t * n = (t * n) + n.
+Proof.
+  intros n m.
+  induction n as [ | x].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> plus_assoc.
+    rewrite <- plus_comm.
+    rewrite -> IHx. 
+    rewrite -> plus_assoc.
+    rewrite <- plus_comm.
+
+Qed. *)
 Theorem mult_comm :
 forall (n m : Nat), n * m = m * n.
 Proof.
@@ -155,16 +170,18 @@ Proof.
       rewrite <- IHu.
       simpl.
       reflexivity.
-  - induction t as [ | v]. 
+  -  simpl.
+    induction n as [ | v]. 
     + simpl.
-      rewrite <- plus_comm.
-      simpl.
-      rewrite -> mult_SO.
+      rewrite <- IHt.
       reflexivity.
     + simpl.
-      rewrite -> IHt.
-      simpl. (**
-      rewrite <- IHt. *)
+      rewrite -> IHv.
+      * simpl. 
+      induction n as [ | w].
+      * simpl.
+        rewrite -> IHt.
+      simpl.
 Abort.
 
 End fmcthanos.
