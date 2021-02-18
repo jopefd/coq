@@ -74,6 +74,32 @@ Proof.
     rewrite -> IHz.
     reflexivity.
 Qed.
+Lemma plus_Sa_b :
+forall (a b : Nat), S a + b = a + S b.
+Proof.
+  intros a b.
+  induction b as [ | c].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHc.
+    simpl.
+    reflexivity.    
+Qed.
+Theorem plus_comm :
+forall (n m : Nat), n + m = m + n.
+Proof.
+  intros n m.
+  induction n as [ | t].
+  - induction m as [ | u].
+    + reflexivity.
+    + simpl.
+      rewrite -> IHu.
+      simpl.
+      reflexivity.
+  - simpl.
+    rewrite <- IHt.
+    assert
 
 (** Exercício x4.16 *)
 Theorem mult_distr :
