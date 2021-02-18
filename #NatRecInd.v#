@@ -63,6 +63,18 @@ Fixpoint fib (n : Nat) : Nat :=
 
 Compute fib (S(S(S(S O)))). *)
 
+Theorem plus_assoc :
+forall (a m y : Nat), (a + m) + y = a + (m + y).
+Proof.
+  intros a m y.
+  induction y as [ | z].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHz.
+    reflexivity.
+Qed.
+
 (** Exercício x4.16 *)
 Lemma mult_SO :
 forall (a : Nat), a * S O = a.
@@ -83,13 +95,15 @@ Proof.
   induction z as [ | z'].
   - simpl.
     reflexivity.
-  - simpl.
-    rewrite -> IHz'.
+  - 
 
+
+simpl.
+    rewrite -> IHz'.
     assert (Heq: x * y + x * (z' + x) = x * y + (x * (z' + S O))).
-    + simpl.
+    + simpl. (**
       reflexivity.
-    + rewrite -> Heq.
+    + rewrite -> Heq. *)
 Abort.
 
 (** Exercício x4.15 *)
@@ -104,15 +118,15 @@ Proof.
       rewrite <- IHu.
       simpl.
       reflexivity.
-  - induction n as [ | v].
+  - simpl. induction n as [ | v]. 
     + simpl.
       rewrite -> IHt.
       simpl.
       reflexivity.
     + simpl.
       rewrite -> IHt.
-      simpl.
-      rewrite <- IHt.
+      simpl. (**
+      rewrite <- IHt. *)
 Abort.
 
 (** Exercício x4.14 *)
