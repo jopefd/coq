@@ -38,7 +38,7 @@ Compute S(S O) * S(S(S O)).
 Compute S(S(S O)) * S(S O).
 
 (** Exercício x4.9 *)
-Fixpoint power (n m : Nat) :=
+Fixpoint power (n m : Nat) : Nat :=
   match m with
   | O => S O
   | S m => (power n m) * n
