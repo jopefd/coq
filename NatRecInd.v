@@ -183,7 +183,7 @@ Proof.
       simpl. *)
 Abort.
 
-Definition leq (n m : Nat) :=
+Definition leq (n m : Nat) : Prop :=
 exists (k : Nat), n + k = m.
 Notation "x <= y" := (leq x y).
 
@@ -191,14 +191,32 @@ Notation "x <= y" := (leq x y).
 Example leq_or_equal_1 :
 forall (n m : Nat), (n <= S m) -> (n <= m \/ n = S m).
 Proof.
-  intros n.
+  intro n.
   induction n as [ | n'].
-  - induction m as [ | m']. 
-    + left.
+  - intro m.
+    induction m as [ | m'].
+    + intro Holeqso.
       unfold leq.
+      left.
       exists O.
+      reflexivity.
+    + intro Holeqssm'.
+      unfold leq.
+      left.
+      exists (S m').
+      rewrite -> plus_comm.
       simpl.
       reflexivity.
+  - intro m.
+    intro Hsn'leqsm.
+      
+
+    induction n as [ | n'
+    left.
+    unfold leq.
+    exists O.
+    simpl.
+    reflexivity.
     + left.
       unfold leq.
       exists (S m').
