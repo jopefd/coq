@@ -189,6 +189,30 @@ Notation "x <= y" := (leq x y).
 
 (** Exercício x4.20 *)
 Example leq_or_equal_1 :
-forall (n m : Nat), n n
+forall (n m : Nat), (n <= S m) -> (n <= m \/ n = S m).
+Proof.
+  intros n.
+  induction n as [ | n'].
+  - induction m as [ | m']. 
+    + left.
+      unfold leq.
+      exists O.
+      simpl.
+      reflexivity.
+    + left.
+      unfold leq.
+      exists (S m').
+      rewrite -> plus_comm.
+      simpl.
+      reflexivity.
+  - induction m as [ | m'].
+    + right.
+      destruct Hnleqsm as [k Hqe].
+      *  
+
+      unfold leq in Hnleqsm.
+      assert (HSneqSm: S n' = S O).
+  -
+  
 
 End fmcthanos.
