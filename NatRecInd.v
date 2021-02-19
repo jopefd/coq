@@ -214,7 +214,7 @@ Proof.
 Qed.
 
 (** Exercício x4.22 *)
-Theorem leq_antisym :
+Theorem leq_trans :
 forall (x y z: Nat), (x <= y) /\ (y <= z) -> x <= z.
 Proof.
   intros x y z.
@@ -229,5 +229,10 @@ Proof.
   rewrite -> plus_assoc.
   reflexivity.
 Qed.
+
+(** Exercício x4.23 *)
+Theorem leq_antisym :
+forall (x y z: Nat), (x <= y) /\ (y <= z) -> x = z.
+Proof.
 
 End fmcthanos.
