@@ -204,12 +204,29 @@ Proof.
 Abort.
 
 (** Exercício x4.21 *)
-Example leq_refl :
+Theorem leq_refl :
 forall (x : Nat), x <= x.
 Proof.
   intro x.
   exists O.
   simpl.
+  reflexivity.
+Qed.
+
+(** Exercício x4.22 *)
+Theorem leq_antisym :
+forall (x y z: Nat), (x <= y) /\ (y <= z) -> x <= z.
+Proof.
+  intros x y z.
+  unfold leq.
+  intro Hxyyz.
+  destruct Hxyyz as [Hxy Hyz].
+  destruct Hxy as [k Hk].
+  destruct Hyz as [k' Hk'].
+  rewrite <- Hk in Hk'.
+  exists (k + k').
+  rewrite <- Hk'.
+  rewrite -> plus_assoc.
   reflexivity.
 Qed.
 
