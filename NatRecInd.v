@@ -144,7 +144,7 @@ Proof.
     rewrite -> IHx.
     reflexivity.
 Qed.
-Lemma Sn_m :
+(** Lemma Sn_m :
 forall (n t : Nat), S t * n = (t * n) + n.
 Proof.
   intros n m.
@@ -157,8 +157,7 @@ Proof.
     rewrite -> IHx. 
     rewrite -> plus_assoc.
     rewrite <- plus_comm.
-
-Qed. *)
+Abort. *)
 Theorem mult_comm :
 forall (n m : Nat), n * m = m * n.
 Proof.
@@ -172,7 +171,7 @@ Proof.
       reflexivity.
   -  simpl.
     induction n as [ | v]. 
-    + simpl.
+    + simpl. (*
       rewrite <- IHt.
       reflexivity.
     + simpl.
@@ -181,7 +180,15 @@ Proof.
       induction n as [ | w].
       * simpl.
         rewrite -> IHt.
-      simpl.
+      simpl. *)
 Abort.
+
+Definition leq (n m : Nat) :=
+exists (k : Nat), n + k = m.
+Notation "x <= y" := (leq x y).
+
+(** Exercício x4.20 *)
+Example leq_or_equal_1 :
+forall (n m : Nat), n n
 
 End fmcthanos.
