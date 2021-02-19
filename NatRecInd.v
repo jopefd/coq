@@ -201,9 +201,16 @@ Proof.
     reflexivity.
   - destruct Hnleqsm.
     left.
-    
-  
+Abort.
 
+(** Exercício x4.21 *)
+Example leq_refl :
+forall (x : Nat), x <= x.
+Proof.
+  intro x.
+  exists O.
+  simpl.
+  reflexivity.
 Qed.
 
 End fmcthanos.
