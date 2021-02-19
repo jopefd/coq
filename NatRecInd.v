@@ -191,46 +191,19 @@ Notation "x <= y" := (leq x y).
 Example leq_or_equal_1 :
 forall (n m : Nat), (n <= S m) -> (n <= m \/ n = S m).
 Proof.
-  intro n.
-  induction n as [ | n'].
-  - intro m.
-    induction m as [ | m'].
-    + intro Holeqso.
-      unfold leq.
-      left.
-      exists O.
-      reflexivity.
-    + intro Holeqssm'.
-      unfold leq.
-      left.
-      exists (S m').
-      rewrite -> plus_comm.
-      simpl.
-      reflexivity.
-  - intro m.
-    intro Hsn'leqsm.
-      
-
-    induction n as [ | n'
-    left.
-    unfold leq.
-    exists O.
+  intros n m.
+  intro Hnleqsm.
+  destruct n as [ | k].
+  - left.
+    exists m.
+    rewrite -> plus_comm.
     simpl.
     reflexivity.
-    + left.
-      unfold leq.
-      exists (S m').
-      rewrite -> plus_comm.
-      simpl.
-      reflexivity.
-  - induction m as [ | m'].
-    + right.
-      destruct Hnleqsm as [k Hqe].
-      *  
-
-      unfold leq in Hnleqsm.
-      assert (HSneqSm: S n' = S O).
-  -
+  - destruct Hnleqsm.
+    left.
+    
   
+
+Qed.
 
 End fmcthanos.
