@@ -251,6 +251,39 @@ Proof.
     destruct Hxz as [k'' Ek''].
     rewrite <- Ek'.
     rewrite <- Ek.
-    rewrite <- Ek.
+(*     rewrite <- Ek. *)
+Abort.
+
+(** Exercício x4.24 *)
+Theorem leq_total :
+forall (x y: Nat), (x <= y) \/ (y <= x).
+Proof.
+  intros x y.
+  induction y as [ | y'].
+  - induction x as [ | x'].
+    + left.
+      exists O.
+      reflexivity.
+    + right.
+      exists (S x').
+      rewrite -> plus_comm.
+      simpl.
+      reflexivity.
+  - destruct IHy' as [Hxy' | Hy'x].
+    + left.
+      destruct Hxy' as [k Hk].
+      rewrite <- Hk.
+      exists (S k).
+      simpl.
+      reflexivity.
+    + right.
+      destruct Hy'x as [k Hk].
+      rewrite <- Hk.
+
+
+induction x as [ | x'].
+    +
+      
+  split.
 
 End fmcthanos.
