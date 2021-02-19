@@ -63,8 +63,49 @@ Fixpoint fib (n : Nat) : Nat :=
 
 Compute fib (S(S(S(S O)))). *)
 
+Theorem plus_assoc :
+forall (a m y : Nat), (a + m) + y = a + (m + y).
+Proof.
+  intros a m y.
+  induction y as [ | z].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHz.
+    reflexivity.
+Qed.
+
+Lemma plus_Sa_b :
+forall (a b : Nat), S a + b = a + S b.
+Proof.
+  intros a b.
+  induction b as [ | c].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHc.
+    simpl.
+    reflexivity.
+Qed.
+Theorem plus_comm :
+forall (n m : Nat), n + m = m + n.
+Proof.
+  intros n m.
+  induction n as [ | t].
+  - induction m as [ | u].
+    + reflexivity.
+    + simpl.
+      rewrite -> IHu.
+      simpl.
+      reflexivity.
+  - rewrite -> plus_Sa_b.
+    simpl.
+    rewrite -> IHt.
+    reflexivity.
+Qed.
+
 (** Exercício x4.16 *)
-Theorem mult_distr_prop :
+Theorem mult_distr :
 forall (x y z : Nat), x * (y + z) = (x * y) + (x * z).
 Proof.
   intros x y z.
@@ -73,10 +114,52 @@ Proof.
     reflexivity.
   - simpl.
     rewrite -> IHz'.
-Abort.
+    rewrite <- plus_assoc.
+    reflexivity.
+Qed.
+
+(** Exercício x4.14 *)
+Theorem mult_assoc :
+forall (n m k : Nat), (n * m) * k = n * (m * k).
+Proof.
+  intros n m k.
+  induction k as [ | k'].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHk'.
+    rewrite <- mult_distr.
+    reflexivity.
+Qed.
 
 (** Exercício x4.15 *)
-Theorem mult_comm_prop :
+Lemma mult_SO_a :
+forall (a : Nat), S O * a = a.
+Proof.
+  intro a.
+  induction a as [ | x].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> IHx.
+    reflexivity.
+Qed.
+Lemma Sn_m :
+forall (n t : Nat), S t * n = (t * n) + n.
+Proof.
+  intros n m.
+  induction n as [ | x].
+  - simpl.
+    reflexivity.
+  - simpl.
+    rewrite -> plus_assoc.
+    rewrite <- plus_comm.
+    rewrite -> IHx. 
+    rewrite -> plus_assoc.
+    rewrite <- plus_comm.
+
+Qed. *)
+Theorem mult_comm :
 forall (n m : Nat), n * m = m * n.
 Proof.
   intros n m.
@@ -87,35 +170,18 @@ Proof.
       rewrite <- IHu.
       simpl.
       reflexivity.
-  - induction n as [ | v].
+  -  simpl.
+    induction n as [ | v]. 
     + simpl.
-      rewrite -> IHt.
-      simpl.
-      reflexivity.
-    + simpl.
-      rewrite -> IHt.
-      simpl.
       rewrite <- IHt.
-Abort.
-
-(** Exercício x4.14 *)
-Theorem mult_assoc_prop :
-forall (n m k : Nat), (n * m) * k = n * (m * k).
-Proof.
-  intros n m k.
-  induction k as [ | k'].
-  - simpl.
-    reflexivity.
-  - simpl. rewrite -> IHk'.
-
-
- induction m as [ | m'].
-    + simpl.
-      rewrite <- IHk'.
-      simpl.
       reflexivity.
     + simpl.
-      rewrite - IHm'.
-Qed.
+      rewrite -> IHv.
+      * simpl. 
+      induction n as [ | w].
+      * simpl.
+        rewrite -> IHt.
+      simpl.
+Abort.
 
 End fmcthanos.
