@@ -281,9 +281,15 @@ Proof.
       rewrite <- Hk.
 
 
-induction x as [ | x'].
+(* induction x as [ | x'].
     +
       
-  split.
+  split. *)
+Abort.
+
+(** Exercício x4.25 *)
+Example n2_leq_2n :
+forall (n : Nat), S(S(S(S(S O)))) <= n -> n ^ S(S O) < S(S O) ^ n.
+Admitted.
 
 End fmcthanos.
