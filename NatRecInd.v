@@ -234,5 +234,13 @@ Qed.
 Theorem leq_antisym :
 forall (x y z: Nat), (x <= y) /\ (y <= z) -> x = z.
 Proof.
+  intros x y z.
+  intro Hxyyz.
+  destruct Hxyyz as [Hxy Hyz].
+  destruct Hxy as [k Ek].
+  destruct Hyz as [k' Ek'].
+  rewrite <- Ek'.
+  rewrite <- Ek.
+  rewrite <- Ek.
 
 End fmcthanos.
