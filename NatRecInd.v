@@ -191,15 +191,20 @@ Example leq_or_equal_1 :
 forall (n m : Nat), (n <= S m) -> (n <= m \/ n = S m).
 Proof.
   intros n m.
-  intro Hnleqsm.
+  intro Hnlsm.
   destruct n as [ | k].
   - left.
     exists m.
     rewrite -> plus_comm.
     simpl.
     reflexivity.
-  - destruct Hnleqsm.
+  - destruct Hnlsm as [x Hnlsm].
     left.
+    exists x.
+    rewrite -> plus_comm in Hnlsm.
+    simpl in Hnlsm.
+    rewrite -> plus_comm.
+    simpl.
 Abort.
 
 (** Exercício x4.21 *)
