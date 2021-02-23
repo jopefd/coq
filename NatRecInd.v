@@ -177,19 +177,9 @@ Proof.
       reflexivity.
   - simpl.
     rewrite -> Sn_m.
-    rewrite -> 
-    induction n as [ | v]. 
-    + simpl. (*
-      rewrite <- IHt.
-      reflexivity.
-    + simpl.
-      rewrite -> IHv.
-      * simpl. 
-      induction n as [ | w].
-      * simpl.
-        rewrite -> IHt.
-      simpl. *)
-Abort.
+    rewrite -> IHt.
+    reflexivity.
+Qed.
 
 Definition leq (n m : Nat) : Prop :=
 exists (k : Nat), n + k = m.
