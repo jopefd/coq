@@ -136,7 +136,7 @@ Proof.
     reflexivity.
 Qed.
 
-(** Exercício x4.15 *)
+(** Extra *)
 Lemma mult_SO_a :
 forall (a : Nat), S O * a = a.
 Proof.
@@ -149,6 +149,7 @@ Proof.
     reflexivity.
 Qed.
 
+(** Exercício x4.15 *)
 Lemma Sn_m :
 forall (n t : Nat), S t * n = (t * n) + n.
 Proof.
