@@ -288,8 +288,18 @@ Proof.
 Abort.
 
 (** Exercício x4.25 *)
-Example n2_leq_2n :
-forall (n : Nat), S(S(S(S(S O)))) <= n -> n ^ S(S O) < S(S O) ^ n.
-Admitted.
+(* Example n2_leq_2n :
+forall (n : Nat), S(S(S(S(S O)))) <= n -> n ^ (S(S O)) < S(S O) ^ n.
+Admitted. *)
+
+(** Homework: 20/02/2021, 1 *)
+Fixpoint sum (i n x : Nat) : Nat :=
+  match n with
+  | O => O
+  | S n' => x + (sum i n' x)
+  end.
+
+Compute (sum (S O) (S(S(S O))) (S O)).
+Compute (sum (S O) (S(S(S(S(S(S O)))))) (S O)).
 
 End fmcthanos.
