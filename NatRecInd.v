@@ -90,6 +90,7 @@ Proof.
     simpl.
     reflexivity.
 Qed.
+
 Theorem plus_comm :
 forall (n m : Nat), n + m = m + n.
 Proof.
@@ -147,7 +148,8 @@ Proof.
     rewrite -> IHx.
     reflexivity.
 Qed.
-(** Lemma Sn_m :
+
+Lemma Sn_m :
 forall (n t : Nat), S t * n = (t * n) + n.
 Proof.
   intros n m.
@@ -155,12 +157,13 @@ Proof.
   - simpl.
     reflexivity.
   - simpl.
+    rewrite -> IHx.
     rewrite -> plus_assoc.
-    rewrite <- plus_comm.
-    rewrite -> IHx. 
     rewrite -> plus_assoc.
-    rewrite <- plus_comm.
-Abort. *)
+    rewrite <- (plus_comm m x).
+    reflexivity.
+Qed.
+
 Theorem mult_comm :
 forall (n m : Nat), n * m = m * n.
 Proof.
@@ -172,7 +175,9 @@ Proof.
       rewrite <- IHu.
       simpl.
       reflexivity.
-  -  simpl.
+  - simpl.
+    rewrite -> Sn_m.
+    rewrite -> 
     induction n as [ | v]. 
     + simpl. (*
       rewrite <- IHt.
