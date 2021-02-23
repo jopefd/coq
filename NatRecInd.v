@@ -48,20 +48,23 @@ Notation "x ^ y" := (power x y).
 (** Exercício x4.10 *)
 Compute S(S O) ^ S(S(S O)).
 
-(** Exercício x4.11
-Fixpoint minus (n m : Nat) : Nat =
+(** Exercício x4.11 *)
+(* Fixpoint minus (n m : Nat) : Nat =
   match m with
   | O => O
   | S m => 
-
+ *)
 Fixpoint fib (n : Nat) : Nat :=
   match n with
   | O => O
   | S O => S O
-  | S(S n) => fib (S n) + fib (n)
+  | S(S n as n') => fib (n') + fib (n)
   end.
 
-Compute fib (S(S(S(S O)))). *)
+Compute fib (S O).
+Compute fib (S(S O)).
+Compute fib (S(S(S O))).
+Compute fib (S(S(S(S O)))).
 
 Theorem plus_assoc :
 forall (a m y : Nat), (a + m) + y = a + (m + y).
@@ -301,5 +304,12 @@ Fixpoint sum (i n x : Nat) : Nat :=
 
 Compute (sum (S O) (S(S(S O))) (S O)).
 Compute (sum (S O) (S(S(S(S(S(S O)))))) (S O)).
+
+Fixpoint sum_alt (i n x : Nat) : Nat :=
+  match n with
+  | O => O
+  | S n' => x + (sum i n' x)
+  end.
+
 
 End fmcthanos.
