@@ -49,11 +49,6 @@ Notation "x ^ y" := (power x y).
 Compute S(S O) ^ S(S(S O)).
 
 (** Exercício x4.11 *)
-(* Fixpoint minus (n m : Nat) : Nat =
-  match m with
-  | O => O
-  | S m => 
- *)
 Fixpoint fib (n : Nat) : Nat :=
   match n with
   | O => O
@@ -235,16 +230,38 @@ Proof.
 Qed.
 
 (** Exercício x4.23 *)
-Theorem leq_antisym :
-forall (x y z: Nat), (x <= y) /\ (y <= z) -> x = z.
+Lemma x_diff :
+forall (x y : Nat), x <> x + S y.
 Proof.
-  intros x y z.
-  intro Hxyyz.
-  assert (Hxz: x <= z).
-  - destruct Hxyyz as [Hxy Hyz]. (* da p melhorar dps *)
-    destruct Hxy as [k Hk].
-    destruct Hyz as [k' Hk'].
-    rewrite <- Hk in Hk'.
+  intros x y.
+  unfold not.
+  induction x as [ | w].
+  - intro Hxxsy.
+    rewrite -> plus_comm in Hxxsy.
+    simpl in Hxxsy.
+    inversion Hxxsy.
+  - intro Hswswsy.
+    rewrite -> plus_comm in Hswswsy.
+    simpl in Hswswsy.
+    inversion Hswswsy as [Hwsyw].
+    rewrite -> plus_comm in Hwsyw.
+    apply (IHw Hwsyw).
+Qed.
+
+Theorem leq_antisym :
+forall (x y: Nat), (x <= y) /\ (y <= x) -> x = y.
+Proof.
+  intros x y.
+  intro Hxyyx.
+  destruct Hxyyx as [Hxy Hyx].
+  destruct Hxy as [w Hw].
+  destruct Hyx as [v Hv].
+  rewrite <- Hw.
+  destruct w as [ | u].
+  - reflexivity.
+  - rewrite x_diff
+
+
     exists (k + k').
     rewrite <- Hk'.
     rewrite -> plus_assoc.
@@ -306,11 +323,23 @@ Fixpoint sum (i n x : Nat) : Nat :=
 Compute (sum (S O) (S(S(S O))) (S O)).
 Compute (sum (S O) (S(S(S(S(S(S O)))))) (S O)).
 
-Fixpoint sum_alt (i n x : Nat) : Nat :=
+Fixpoint sum1 (n : Nat) (s : Nat -> Nat) : Nat :=
   match n with
   | O => O
-  | S n' => x + (sum i n' x)
+  | S n' => (s n) + (sum1 n' s)
   end.
+
+Compute (sum1 (S(S(S O))) (fun i => (S O))).
+Compute (sum1 (S O) (S(S(S(S(S(S O)))))) (S O)).
+
+Fixpoint sum_alt (i n x : Nat) : Nat :=
+  match i with
+  | S n => O
+  | (S i' as j) => x + (sum_alt j n x) 
+  | _ => O
+  end.
+
+
 
 
 End fmcthanos.
