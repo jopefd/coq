@@ -248,6 +248,15 @@ Proof.
     apply (IHw Hwsyw).
 Qed.
 
+Lemma y_equality :
+forall (x y : Nat), x + y = x -> y = O.
+Proof.
+  intros x y.
+  intro Hxyx.
+  induction y as [ | Sw] in Hxyx.
+  - 
+Abort.
+
 Theorem leq_antisym :
 forall (x y: Nat), (x <= y) /\ (y <= x) -> x = y.
 Proof.
@@ -259,11 +268,12 @@ Proof.
   rewrite <- Hw.
   destruct w as [ | u].
   - reflexivity.
-  - rewrite x_diff
-
-
-    exists (k + k').
-    rewrite <- Hk'.
+  - simpl.
+    destruct x as [ | Su].
+    + rewrite -> plus_comm.
+      simpl.
+      discriminate.
+    
     rewrite -> plus_assoc.
     reflexivity.
   - destruct Hxyyz as [Hxy Hyz].  
