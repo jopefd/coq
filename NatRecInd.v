@@ -257,6 +257,18 @@ Proof.
   - 
 Abort.
 
+Lemma right_cancel_equality :
+forall (x a b : Nat), x + a = x + b -> a = b.
+Proof.
+  intros x a b.
+  intro Hxaxb.
+  destruct a as [ | c].
+  - destruct b as [ | d].
+    + reflexivity.
+    + simpl in Hxaxb.
+      discriminate.
+    
+
 Theorem leq_antisym :
 forall (x y: Nat), (x <= y) /\ (y <= x) -> x = y.
 Proof.
