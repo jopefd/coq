@@ -195,7 +195,17 @@ Proof.
     reflexivity.
   - destruct Hnlsm as [x Hnlsm].
     left.
+    induction x as [ | y].
+    + simpl in Hnlsm.
+      exists O.
+      simpl.
+      induction m as [ | j].
+      * contradiction.
+      
+    
+    
     exists x.
+    
     rewrite -> plus_comm in Hnlsm.
     simpl in Hnlsm.
     rewrite -> plus_comm.
@@ -266,8 +276,8 @@ Proof.
   - destruct b as [ | d].
     + reflexivity.
     + simpl in Hxaxb.
-      discriminate.
-    
+(*       discriminate. *)
+Abort.
 
 Theorem leq_antisym :
 forall (x y: Nat), (x <= y) /\ (y <= x) -> x = y.
@@ -278,9 +288,16 @@ Proof.
   destruct Hxy as [w Hw].
   destruct Hyx as [v Hv].
   rewrite <- Hw.
-  destruct w as [ | u].
+  induction w as [ | u].
   - reflexivity.
-  - simpl.
+  - pattern x at 1. rewrite <- Hv.
+    induction v as [ | t].
+    + rewrite -> Hw.
+      reflexivity.
+    + rewrite <- Hw in Hv.
+      rewrite -> plus_assoc in Hv.
+      discriminate.
+      
     destruct x as [ | Su].
     + rewrite -> plus_comm.
       simpl.
