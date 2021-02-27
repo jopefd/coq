@@ -198,6 +198,22 @@ Proof.
     reflexivity.
 Qed.
 
+Example leq_or_equal_2 :
+forall (n m : Nat), (n <= m \/ n = S m) -> (n <= S m).
+Proof.
+  intros n m.
+  intro Hnmnsm.
+  destruct Hnmnsm as [Hnm | Hnsm].
+  - destruct Hnm as [k Hk].
+    exists (S k).
+    simpl.
+    inversion Hk.
+    reflexivity.
+  - exists O.
+    simpl.
+    assumption.
+Qed.
+
 (** Exercício x4.21 *)
 Theorem leq_refl :
 forall (x : Nat), x <= x.
