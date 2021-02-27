@@ -263,21 +263,38 @@ forall (x y : Nat), x + y = x -> y = O.
 Proof.
   intros x y.
   intro Hxyx.
-  induction y as [ | Sw] in Hxyx.
-  - 
+  induction y as [ | y'].
+  - reflexivity.
+  - induction x as [ | x'].
+    + simpl in Hxyx.
+      discriminate.
+    + rewrite -> IHy' in IHx'.
+(*       * discriminate. *)
 Abort.
 
-Lemma right_cancel_equality :
-forall (x a b : Nat), x + a = x + b -> a = b.
+Lemma xaxbab :
+forall (x a b : Nat), a + x = b + x -> a = b.
 Proof.
   intros x a b.
   intro Hxaxb.
-  destruct a as [ | c].
-  - destruct b as [ | d].
-    + reflexivity.
-    + simpl in Hxaxb.
-(*       discriminate. *)
+  induction x as [ | x'].
+  - assumption.
+  - rewrite <- IHx' in Hxaxb.
+    simpl in Hxaxb.
 Abort.
+
+Lemma abo :
+forall (a b : Nat), a + b = O -> a = O /\ b = O.
+Proof.
+  intros a b Habo.
+  destruct b as [ | b'].
+  - split.
+    + simpl in Habo.
+      assumption.
+    + reflexivity.
+  - simpl in Habo.
+    discriminate.
+Qed.
 
 Theorem leq_antisym :
 forall (x y: Nat), (x <= y) /\ (y <= x) -> x = y.
@@ -287,7 +304,38 @@ Proof.
   destruct Hxyyx as [Hxy Hyx].
   destruct Hxy as [w Hw].
   destruct Hyx as [v Hv].
-  rewrite <- Hw.
+  rewrite <- Hw in Hv.
+  induction y as [ | y'].
+  - induction x as [ | x'].
+    + induction w as [ | w'].
+      * reflexivity.
+      * reflexivity.
+    + rewrite -> plus_comm in Hw.
+      simpl in Hw.
+      discriminate.
+  - induction x as [ | x''].
+    + induction w as [ | w''].
+      * simpl in Hw.
+        discriminate.
+      * rewrite -> plus_comm in Hv.
+        simpl in Hv.
+        discriminate.
+    + induction w as [ | w'''].
+      * rewrite -> plus_comm in Hw.
+        simpl in Hw.
+        rewrite -> plus_comm in Hw.
+        simpl in Hw.
+        assumption.
+      * induction v as [ | v'].
+        simpl in Hv.
+        -- rewrite Hv.
+           reflexivity.
+        --
+        rewrite -> plus_comm in H.
+  
+  
+  
+  
   induction w as [ | u].
   - reflexivity.
   - pattern x at 1. rewrite <- Hv.
@@ -296,7 +344,11 @@ Proof.
       reflexivity.
     + rewrite <- Hw in Hv.
       rewrite -> plus_assoc in Hv.
-      discriminate.
+      simpl (S u + S t) in Hv.
+      induction x as [ | s].
+      * simpl in Hv.
+        discriminate.
+      * 
       
     destruct x as [ | Su].
     + rewrite -> plus_comm.
