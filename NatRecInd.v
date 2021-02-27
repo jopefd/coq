@@ -373,8 +373,8 @@ Theorem leq_total :
 forall (x y: Nat), (x <= y) \/ (y <= x).
 Proof.
   intros x y.
-  induction y as [ | y'].
-  - induction x as [ | x'].
+  destruct y as [ | y'].
+  - destruct x as [ | x'].
     + left.
       exists O.
       reflexivity.
@@ -383,23 +383,34 @@ Proof.
       rewrite -> plus_comm.
       simpl.
       reflexivity.
-  - destruct IHy' as [Hxy' | Hy'x].
+  - induction x as [ | x'].
     + left.
-      destruct Hxy' as [k Hk].
-      rewrite <- Hk.
-      exists (S k).
+      exists (S y').
+      rewrite -> plus_comm.
       simpl.
       reflexivity.
-    + right.
-      destruct Hy'x as [k Hk].
-      rewrite <- Hk.
-
-
-(* induction x as [ | x'].
-    +
-      
-  split. *)
-Abort.
+    + destruct IHx' as [Hx'sy' | Hsy'x'].
+      destruct Hx'sy' as [w Hw].
+      destruct w as [ | w'].
+      * rewrite <- Hw.
+        right.
+        exists (S O).
+        simpl.
+        reflexivity.
+      * rewrite <- Hw.
+        left.
+        exists w'.
+        rewrite -> plus_comm.
+        simpl.
+        rewrite -> plus_comm.
+        reflexivity.
+      * destruct Hsy'x' as [v Hv].
+        right.
+        exists (S v).
+        simpl.
+        rewrite -> Hv.
+        reflexivity.
+Qed.
 
 (** Exercício x4.25 *)
 (* Example n2_leq_2n :
