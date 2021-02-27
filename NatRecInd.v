@@ -187,30 +187,16 @@ forall (n m : Nat), (n <= S m) -> (n <= m \/ n = S m).
 Proof.
   intros n m.
   intro Hnlsm.
-  destruct n as [ | k].
+  destruct Hnlsm as [k Hk].
+  destruct k as [ | k'].
+  - right.
+    assumption.
   - left.
-    exists m.
-    rewrite -> plus_comm.
-    simpl.
+    simpl in Hk.
+    exists k'.
+    inversion Hk.
     reflexivity.
-  - destruct Hnlsm as [x Hnlsm].
-    left.
-    induction x as [ | y].
-    + simpl in Hnlsm.
-      exists O.
-      simpl.
-      induction m as [ | j].
-      * contradiction.
-      
-    
-    
-    exists x.
-    
-    rewrite -> plus_comm in Hnlsm.
-    simpl in Hnlsm.
-    rewrite -> plus_comm.
-    simpl.
-Abort.
+Qed.
 
 (** Exercício x4.21 *)
 Theorem leq_refl :
