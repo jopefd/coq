@@ -427,6 +427,23 @@ Fixpoint sum (i n x : Nat) : Nat :=
 Compute (sum (S O) (S(S(S O))) (S O)).
 Compute (sum (S O) (S(S(S(S(S(S O)))))) (S O)).
 
+Theorem n_equals_sum_3_5 :
+forall (n : Nat), exists (t u : Nat), n = S(S(S O)) * t + S(S(S(S(S O)))) * u.
+Proof.
+  intro n.
+  induction n as [ | m].
+  - exists O.
+    exists O.
+    simpl.
+    reflexivity.
+  - destruct IHm as [v Hv].
+    destruct Hv as [w Hw].
+    rewrite -> Hw.
+    simpl.
+    exists (S(S O)).
+    exists (S O).
+
+
 Fixpoint sum1 (n : Nat) (s : Nat -> Nat) : Nat :=
   match n with
   | O => O
