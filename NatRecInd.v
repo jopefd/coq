@@ -439,7 +439,12 @@ Proof.
   - destruct IHm as [v Hv].
     destruct Hv as [w Hw].
     rewrite -> Hw.
-    simpl.
+    destruct v as [ | x].
+    + destruct w as [ | y].
+      * simpl.
+        exists O.
+        exists O.
+        simpl.
     exists (S(S O)).
     exists (S O).
 
