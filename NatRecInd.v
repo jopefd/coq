@@ -265,9 +265,15 @@ forall (x y : Nat), x + y = x -> y = O.
 Proof.
   intros x y.
   intro Hxyx.
-  induction y as [ | y'].
+  destruct y as [ | y'].
   - reflexivity.
-  - induction x as [ | x'].
+  - simpl in Hxyx.
+    destruct x as [ | x'].
+    + inversion Hxyx.
+    +
+  
+  
+   induction x as [ | x'].
     + simpl in Hxyx.
       discriminate.
     + rewrite -> IHy' in IHx'.
