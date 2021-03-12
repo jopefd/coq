@@ -272,11 +272,11 @@ Proof.
     + inversion Hxyx.
     +
   
-  
+(*   
    induction x as [ | x'].
     + simpl in Hxyx.
       discriminate.
-    + rewrite -> IHy' in IHx'.
+    + rewrite -> IHy' in IHx'. *)
 (*       * discriminate. *)
 Abort.
 
@@ -451,8 +451,9 @@ Proof.
         exists O.
         exists O.
         simpl.
-    exists (S(S O)).
-    exists (S O).
+(*     exists (S(S O)).
+    exists (S O). *)
+Abort.
 
 
 Fixpoint sum1 (n : Nat) (s : Nat -> Nat) : Nat :=
@@ -462,13 +463,12 @@ Fixpoint sum1 (n : Nat) (s : Nat -> Nat) : Nat :=
   end.
 
 Compute (sum1 (S(S(S O))) (fun i => (S O))).
-Compute (sum1 (S O) (S(S(S(S(S(S O)))))) (S O)).
+(* Compute (sum1 (S O) (S(S(S(S(S(S O)))))) (S O)). *)
 
-Fixpoint sum_alt (i n x : Nat) : Nat :=
+Fixpoint sum_alt (i n : Nat) (x : Nat -> Nat) : Nat :=
   match i with
-  | S n => O
-  | (S i' as j) => x + (sum_alt j n x) 
-  | _ => O
+  | n => (x n) + (sum_alt (S n) n x)
+  | S(S n as n') => O
   end.
 
 
