@@ -18,12 +18,14 @@ int a(int n, int x) {
 }
 
 int main(void) {
-  a(3, 2);
-  printf("%i\n", a_calls);
-  printf("%i\n", a_new_args_calls);
-  a(7, 5);
-  printf("%i\n", a_calls);
-  printf("%i\n", a_new_args_calls);
-  
+  int a0 = a(3, 0);
+  printf("%i\n", a0);
+  int a1 = a(3, 1);
+  printf("%i\n", a1);
+  int a2 = a(3, 2);
+  printf("%i\n", a2);
+  int a3 = a(3, 3);
+  printf("%i\n", a3);
+
   return 0;
 }
