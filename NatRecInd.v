@@ -475,6 +475,7 @@ Compute (sum1 (S(S(S O))) (fun i => (S O))).
   *)
   
 (** (* (* (* (* (* (* Problem Set 1.1 *) *) *) *) *) *) *)
+
 Definition less_than (n m : Nat) : Prop :=
 exists (k : Nat), n + S k = m.
 Notation "x < y" := (less_than x y).
@@ -538,5 +539,20 @@ Proof.
   - exists n'.
     assumption.
 Qed.
+
+Example problema_2_1 :
+forall (a x y : Nat), x <= y -> x ^ a < y ^ a.
+Proof.
+  intros a x y.
+  intro xleqy.
+  destruct xleqy as [k existsk].
+  rewrite <- existsk.
+  induction x as [ | x'].
+  - rewrite -> plus_comm.
+    simpl.
+    destruct k as [ | k'].
+  simpl.
+Abort.
+
 
 End fmcthanos.
