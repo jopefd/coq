@@ -465,15 +465,19 @@ Fixpoint sum1 (n : Nat) (s : Nat -> Nat) : Nat :=
 Compute (sum1 (S(S(S O))) (fun i => (S O))).
 (* Compute (sum1 (S O) (S(S(S(S(S(S O)))))) (S O)). *)
 
-Fixpoint sum_natseq (i n : Nat) (x : Nat -> Nat) : Nat :=
+(* Fixpoint sum_natseq (i n : Nat) (x : Nat -> Nat) : Nat :=
   match i with
   | i' => (x i') + (sum_natseq (S i') n x)
   | S n => O
-  end.
+  end. *)
   
 (**  Preciso estudar listas primeiro para definir isso.
   *)
-
+  
+(** (* (* (* (* (* (* Problem Set 1.1 *) *) *) *) *) *) *)
+Definition less_than (n m : Nat) : Prop :=
+exists (k : Nat), n + S k = m.
+Notation "x < y" := (less_than x y).
 
 
 
