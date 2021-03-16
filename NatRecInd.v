@@ -479,6 +479,22 @@ Definition less_than (n m : Nat) : Prop :=
 exists (k : Nat), n + S k = m.
 Notation "x < y" := (less_than x y).
 
+Example problema_1_1 :
+forall (x y : Nat), x <= y -> x < y \/ x = y.
+Proof.
+  intros x y.
+  intro Hxleqy.
+  destruct Hxleqy as [k Hk].
+  destruct k as [ | k'].
+  - simpl in Hk.
+    right.
+    assumption.
+  - left.
+    unfold less_than.
+    exists k'.
+    assumption.
+Qed.
+
 
 
 End fmcthanos.
