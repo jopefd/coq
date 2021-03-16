@@ -495,6 +495,21 @@ Proof.
     assumption.
 Qed.
 
+Example problema_1_2 :
+forall (x y : Nat), x < y \/ x = y -> x <= y.
+Proof.
+  intros x y.
+  intro Hxy.
+  destruct Hxy as [Hxlty | Hxeqy].
+  - destruct Hxlty as [n Hsn].
+    unfold leq.
+    exists (S n).
+    assumption.
+  - exists O.
+    simpl.
+    assumption.
+Qed.
+
 
 
 End fmcthanos.
