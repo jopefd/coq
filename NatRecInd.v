@@ -554,5 +554,30 @@ Proof.
   simpl.
 Abort.
 
-
+Example problema_3 :
+forall n : Nat,
+(exists k : Nat, n = S(S O) * k) \/
+(exists k' : Nat, n = S(S O) * k' + S O).
+Proof.
+  intro n.
+  induction n as [ | n'].
+  - left.
+    exists O.
+    simpl.
+    reflexivity.
+  - destruct IHn' as [IHn'1 | IHn'2].
+    + right.
+      destruct IHn'1 as [m Em].
+      exists m.
+      rewrite <- Em.
+      simpl.
+      reflexivity.
+    + left.
+      destruct IHn'2 as [m Em].
+      rewrite -> Em.
+      exists (m + S O).
+      simpl.
+      reflexivity.
+Qed.
+  
 End fmcthanos.
