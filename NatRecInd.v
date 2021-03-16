@@ -511,14 +511,21 @@ Proof.
 Qed.
 
 Example problema_1_3 :
-forall (x y : Nat), x < y -> x <= y \/ x <> y.
+forall (x y : Nat), x < y -> x <= y /\ x <> y.
 Proof.
   intros x y.
   intro Hxy.
   destruct Hxy as [n Hn].
-  left.
-  exists (S n).
-  assumption.
+  split.
+  - exists (S n).
+    assumption.
+  - simpl in Hn.
+    destruct y as [ | y'].
+    + inversion Hn.
+    + injection Hn.
 Qed.
+
+Example problema_1_4 :
+forall (x y : Nat), x <= y \/ x <> y -> x < y.
 
 End fmcthanos.
