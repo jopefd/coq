@@ -523,9 +523,20 @@ Proof.
     destruct y as [ | y'].
     + inversion Hn.
     + injection Hn.
-Qed.
+Abort.
 
 Example problema_1_4 :
-forall (x y : Nat), x <= y \/ x <> y -> x < y.
+forall (x y : Nat), x <= y /\ x <> y -> x < y.
+Proof.
+  intros x y.
+  intro xleqy_and_xdiffy.
+  destruct xleqy_and_xdiffy as [xleqy xdiffy].
+  destruct xleqy as [n defleq].
+  destruct n as [ | n'].
+  - simpl in defleq.
+    contradiction.
+  - exists n'.
+    assumption.
+Qed.
 
 End fmcthanos.
