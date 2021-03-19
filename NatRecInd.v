@@ -557,7 +557,7 @@ Abort.
 Example problema_3 :
 forall n : Nat,
 (exists k : Nat, n = S(S O) * k) \/
-(exists k' : Nat, n = S(S O) * k' + S O).
+(exists k' : Nat, n = S(S(S O) * k')).
 Proof.
   intro n.
   induction n as [ | n'].
@@ -575,7 +575,7 @@ Proof.
     + left.
       destruct IHn'2 as [m Em].
       rewrite -> Em.
-      exists (m + S O).
+      exists (S m).
       simpl.
       reflexivity.
 Qed.
